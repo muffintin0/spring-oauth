@@ -6,22 +6,49 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.huawei.hostingtrial.domain.User;
 import com.huawei.hostingtrial.domain.Authority;
+import com.huawei.hostingtrial.repository.AuthorityRepository;
 import com.huawei.hostingtrial.repository.UserRepository;
 
-@Service
+@Component("userService")
 @Transactional(readOnly=true)
 public class UserService {
 
 	@Autowired
 	UserRepository userRepository;
 	
-	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+	@Autowired
+	AuthorityRepository authorityRepository;
 	
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
+    public void saveDefaultUserAndPermission(User user) {
+        //create SHA-256 hased password
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        user.setImsPassword(new BCryptPasswordEncoder().encode(user.getImsPassword()));
+        //set permission as read
+        user.setScope("read");
+        //set authorization grant type as implicit
+        user.setAuthorizedGrantTypes("implicit");
+        //set up default authority
+        addUserAuthority(user, "ROLE_USER");
+        //save user
+        userRepository.save(user);
+    }
+
+    public void addUserAuthority(User user, String role){
+        //set up default authority
+        Authority authority = authorityRepository.findByAuthority(role);
+        user.addAuthority(authority);
+    }
+    
 	//generic method to get user, name could be username or ims_username
 	public User getUser(String name){
 		User user = userRepository.findByUsername(name);

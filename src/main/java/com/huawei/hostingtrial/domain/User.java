@@ -65,7 +65,7 @@ public class User {
 	private UserAccountTypeEnum accountType;
 	
     @ManyToOne
-    @Column(name = "company")
+    @JoinColumn(name = "company")
     private Company company; 
 
     @NotNull
@@ -131,6 +131,10 @@ public class User {
 		this.authorities = authorities;
 	}
 
+	public void addAuthority(Authority authority) {
+		this.authorities.add(authority);
+	}
+	
 	@PrePersist
     protected void onCreate() {
       created = updated = new Date();

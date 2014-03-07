@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -33,11 +34,11 @@ public class Phone {
     private Boolean isActivated = false;
 
     @ManyToOne
-    @Column(name = "developer")
+    @JoinColumn(name = "developer")
     private User developer;
     
     @ManyToOne
-    @Column(name = "company")
+    @JoinColumn(name = "company")
     private Company company;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "phones")

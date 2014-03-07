@@ -10,12 +10,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Component;
 
 import com.huawei.hostingtrial.domain.Instance;
 import com.huawei.hostingtrial.domain.InstanceTypeEnum;
@@ -24,7 +26,8 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CityResponse;
 
-
+@Component("instanceService")
+@Transactional(readOnly=true)
 public class InstanceService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(InstanceService.class);

@@ -68,7 +68,7 @@ public class Application {
 
     @NotNull
     @ManyToOne
-    @Column(name = "developer")
+    @JoinColumn(name = "developer")
     private User developer;
     
     @NotNull

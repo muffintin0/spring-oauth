@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +24,7 @@ import com.huawei.hostingtrial.repository.UserRepository;
  * A custom {@link UserDetailsService} where user information
  * is retrieved from a JPA repository
  */
-@Service
+@Component("customUserDetailService")
 @Transactional(readOnly = true)
 public class CustomUserDetailsService implements UserDetailsService {
 		

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +15,7 @@ import com.huawei.hostingtrial.domain.Phone;
 import com.huawei.hostingtrial.domain.User;
 import com.huawei.hostingtrial.repository.PhoneRepository;
 
-@Service
+@Component("phoneService")
 @Transactional(readOnly = true)
 public class PhoneService {
 
